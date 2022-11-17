@@ -29,7 +29,7 @@ public class StockService {
 
     private final StockRepository stockRepository;
     private final StockSender stockSender;
-    private static final List<String> AVAILABLE_PRODUCTS = Arrays.asList("order1", "order2", "order3", "order4", "order5");
+    private static final List<String> AVAILABLE_PRODUCTS = Arrays.asList("product1", "product2", "product3", "product4", "product5");
 
     @PostConstruct
     public void init() {
@@ -79,9 +79,7 @@ public class StockService {
     }
 
     public void recalculateStockValues(List<OrderDto> orders) {
-        orders.stream().filter(orderDto -> orderDto.getStatus() != null &&
-                orderDto.getStatus().equals(OrderStatus.ORDER_STOCK_COMPLETED.name()))
-                .forEach(orderDto -> {
+        orders.forEach(orderDto -> {
                     Optional<Stock> lStock = stockRepository.findByName(orderDto.getName());
                     lStock.ifPresent(stock -> {
                         int quantity = orderDto.getQuantity();

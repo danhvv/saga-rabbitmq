@@ -40,8 +40,13 @@ public class OrderController {
                 .collect(Collectors.toList()));
     }
 
+    @GetMapping
+    public ResponseEntity<List<OrderResource>> getAll(){
+        return ResponseEntity.ok(orderService.getAll());
+    }
+
     @GetMapping("/transaction/{transactionId}")
-    public ResponseEntity<OrderResource> getOrders(@PathVariable String transactionId){
+    public ResponseEntity<OrderResource> getOrderDetail(@PathVariable String transactionId){
         Order order = orderService.findByTransactionId(transactionId);
         return ResponseEntity.ok(OrderResource.builder()
                 .transactionId(order.getTransactionId())

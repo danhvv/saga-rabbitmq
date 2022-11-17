@@ -1,5 +1,6 @@
 package com.danhvv.saga.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,9 +13,12 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 public class OrderResource {
+    @Schema(hidden = true)
     private String transactionId;
     private String name;
     private Integer quantity;
+    @Schema(hidden = true)
     private String status;
+    @Schema(hidden = true)
     private String paymentId;
 }
