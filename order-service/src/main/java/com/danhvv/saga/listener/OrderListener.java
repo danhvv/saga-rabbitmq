@@ -40,7 +40,7 @@ public class OrderListener {
                 case ORDER_COMPLETED:
                 case ORDER_FAILED:
                 case ORDER_STOCK_COMPLETED:
-                    orderService.updateOrder(orderDto.getTransactionId(), orderStatus, orderDto.getPaymentId());
+                        orderService.updateOrder(orderDto.getTransactionId(), orderStatus, orderDto.getPaymentId());
                     break;
                 default:
                     break;

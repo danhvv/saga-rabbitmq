@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class OrderResource {
+public class OrderResponse {
     @Schema(hidden = true)
     private String transactionId;
     private String name;

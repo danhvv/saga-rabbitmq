@@ -1,6 +1,6 @@
 package com.danhvv.saga.controller;
 
-import com.danhvv.saga.dto.StockResource;
+import com.danhvv.saga.dto.StockResponse;
 import com.danhvv.saga.repository.StockRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +19,9 @@ public class StockController {
     private final StockRepository stockRepository;
 
     @GetMapping
-    public ResponseEntity<List<StockResource>> getStocks() {
+    public ResponseEntity<List<StockResponse>> getStocks() {
         return ResponseEntity.ok(stockRepository.findAll().stream()
-                .map(stock -> StockResource.builder()
+                .map(stock -> StockResponse.builder()
                         .name(stock.getName())
                         .quantity(stock.getQuantity())
                         .build())

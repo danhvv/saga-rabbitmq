@@ -1,6 +1,7 @@
 package com.danhvv.saga.service;
 
 import com.danhvv.saga.dto.PaymentDto;
+import com.danhvv.saga.dto.PaymentResponse;
 import com.danhvv.saga.dto.StockDto;
 import com.danhvv.saga.entity.Payment;
 import com.danhvv.saga.enums.OrderStatus;
@@ -10,9 +11,12 @@ import com.danhvv.saga.repository.PaymentRepository;
 import com.danhvv.saga.sender.PaymentSender;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -22,6 +26,12 @@ public class PaymentService {
 
     private final PaymentRepository paymentRepository;
     private final PaymentSender paymentSender;
+    private final ModelMapper modelMapper;
+
+    public List<PaymentResponse> getAll() {
+        return modelMapper.map(paymentRepository.findAll(), new TypeToken<List<PaymentResponse>>() {
+        }.getType());
+    }
 
     @Transactional
     public Payment createPayment(PaymentDto paymentDto) {
@@ -50,14 +60,14 @@ public class PaymentService {
             if (!isSuccess) {
                 lPayment.setStatus(PaymentStatus.PAYMENT_FAILED);
                 paymentRepository.save(lPayment);
-                sendOrderFailedNotification(paymentDto);
                 sendStockFailedNotification(paymentDto);
+                sendOrderFailedNotification(paymentDto);
             } else {
                 sendNotificationToOrderService(paymentDto, lPayment);
             }
         } else {
-            sendOrderFailedNotification(paymentDto);
             sendStockFailedNotification(paymentDto);
+            sendOrderFailedNotification(paymentDto);
         }
     }
 
@@ -69,7 +79,6 @@ public class PaymentService {
                     .status(StockStatus.STOCK_FAILED.name())
                     .build());
         } catch (JsonProcessingException e) {
-            // Nothing to do
         }
     }
 
@@ -79,7 +88,6 @@ public class PaymentService {
                 orderDto.setStatus(OrderStatus.ORDER_FAILED.name());
                 paymentSender.orderNotify(orderDto);
             } catch (JsonProcessingException e) {
-                // do nothing for now
             }
         });
     }
@@ -94,14 +102,12 @@ public class PaymentService {
                 orderDto.setStatus(OrderStatus.ORDER_COMPLETED.name());
                 paymentSender.orderNotify(orderDto);
             } catch (JsonProcessingException e) {
-                // do nothing for now
             }
         });
     }
 
-    public Payment findById(String paymentId) {
-        return paymentRepository.findById(paymentId)
-                .orElseThrow(() -> new IllegalArgumentException("Payment can not be found by given id"));
-
+    public PaymentResponse findById(String paymentId) {
+        return modelMapper.map(paymentRepository.findById(paymentId)
+                .orElseThrow(() -> new IllegalArgumentException("Payment can not be found by given id")), PaymentResponse.class);
     }
 }

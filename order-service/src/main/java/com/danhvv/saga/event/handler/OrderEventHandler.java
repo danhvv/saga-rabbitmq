@@ -34,7 +34,7 @@ public class OrderEventHandler {
     public void createOrdersEvent(CreateOrdersEvent createOrdersEvent) throws JsonProcessingException {
         List<Order> lOrders = createOrdersEvent.getOrders();
         if (!CollectionUtils.isEmpty(lOrders)) {
-            String transactionId = UUID.randomUUID().toString();
+            String transactionId = lOrders.get(0).getTransactionId();
             LOGGER.info("Sending PAYMENT_REQUESTED notification to payment queue. Transaction_id: {}", transactionId);
             orderSender.paymentNotify(PaymentDto.builder()
                     .transactionId(transactionId)

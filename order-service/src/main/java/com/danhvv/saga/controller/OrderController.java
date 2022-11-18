@@ -1,19 +1,12 @@
 package com.danhvv.saga.controller;
 
-import com.danhvv.saga.constant.ApplicationConstant;
-import com.danhvv.saga.dto.OrderResource;
+import com.danhvv.saga.converter.OrderResourceToOrderConverter;
+import com.danhvv.saga.dto.OrderResponse;
 import com.danhvv.saga.entity.Order;
 import com.danhvv.saga.service.OrderService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.AllArgsConstructor;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,13 +17,13 @@ import java.util.stream.Collectors;
 public class OrderController {
 
     private final OrderService orderService;
-    private final ConversionService conversionService;
+    private final OrderResourceToOrderConverter orderResourceToOrderConverter;
 
     @PostMapping
-    public ResponseEntity<List<OrderResource>> createOrder(@RequestBody List<OrderResource> orderResource) throws JsonProcessingException {
-        List<Order> orders = orderResource.stream().map(item -> conversionService.convert(item, Order.class)).collect(Collectors.toList());
+    public ResponseEntity<List<OrderResponse>> createOrder(@RequestBody List<OrderResponse> orderResponse) {
+        List<Order> orders = orderResourceToOrderConverter.convert(orderResponse);
         orders = orderService.createOrder(orders);
-        return ResponseEntity.ok(orders.stream().map(order -> OrderResource.builder()
+        return ResponseEntity.ok(orders.stream().map(order -> OrderResponse.builder()
                 .transactionId(order.getTransactionId())
                 .name(order.getName())
                 .quantity(order.getQuantity())
@@ -41,14 +34,14 @@ public class OrderController {
     }
 
     @GetMapping
-    public ResponseEntity<List<OrderResource>> getAll(){
+    public ResponseEntity<List<OrderResponse>> getAll(){
         return ResponseEntity.ok(orderService.getAll());
     }
 
     @GetMapping("/transaction/{transactionId}")
-    public ResponseEntity<OrderResource> getOrderDetail(@PathVariable String transactionId){
+    public ResponseEntity<OrderResponse> getOrderDetail(@PathVariable String transactionId){
         Order order = orderService.findByTransactionId(transactionId);
-        return ResponseEntity.ok(OrderResource.builder()
+        return ResponseEntity.ok(OrderResponse.builder()
                 .transactionId(order.getTransactionId())
                 .name(order.getName())
                 .quantity(order.getQuantity())

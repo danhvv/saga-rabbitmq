@@ -11,7 +11,8 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class StockResource {
-    private String name;
-    private Integer quantity;
+public class PaymentResponse {
+    private String status;
+    private Double totalPrice;
+    private String transactionId;
 }

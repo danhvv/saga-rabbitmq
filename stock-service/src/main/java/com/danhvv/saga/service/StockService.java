@@ -31,17 +31,17 @@ public class StockService {
     private final StockSender stockSender;
     private static final List<String> AVAILABLE_PRODUCTS = Arrays.asList("product1", "product2", "product3", "product4", "product5");
 
-    @PostConstruct
-    public void init() {
-        stockRepository.deleteAll();
-        AVAILABLE_PRODUCTS.forEach(product -> {
-            int totalQuantity = new Random().nextInt(20);
-            stockRepository.save(Stock.builder()
-                    .name(product)
-                    .quantity(totalQuantity)
-                    .build());
-        });
-    }
+//    @PostConstruct
+//    public void init() {
+//        stockRepository.deleteAll();
+//        AVAILABLE_PRODUCTS.forEach(product -> {
+//            int totalQuantity = new Random().nextInt(20);
+//            stockRepository.save(Stock.builder()
+//                    .name(product)
+//                    .quantity(totalQuantity)
+//                    .build());
+//        });
+//    }
 
 
     @Transactional
@@ -61,7 +61,6 @@ public class StockService {
                                 stockDto.getTransactionId());
                         stockSender.orderNotify(orderDto);
                     } catch (JsonProcessingException e) {
-                        // nothing to do
                     }
                 } else {
                     sendPaymentFailedNotification(stockDto);
@@ -79,7 +78,9 @@ public class StockService {
     }
 
     public void recalculateStockValues(List<OrderDto> orders) {
-        orders.forEach(orderDto -> {
+        orders.stream().filter(orderDto -> orderDto.getStatus() != null &&
+                orderDto.getStatus().equals(OrderStatus.ORDER_STOCK_COMPLETED.name()))
+                .forEach(orderDto -> {
                     Optional<Stock> lStock = stockRepository.findByName(orderDto.getName());
                     lStock.ifPresent(stock -> {
                         int quantity = orderDto.getQuantity();
@@ -98,7 +99,6 @@ public class StockService {
                     .status(status.name())
                     .build());
         } catch (JsonProcessingException e) {
-            // nothing to do
         }
     }
 
@@ -112,7 +112,6 @@ public class StockService {
             try {
                 stockSender.orderNotify(item);
             } catch (JsonProcessingException e) {
-                //Nothing to do for now
             }
         });
     }
