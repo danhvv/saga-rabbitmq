@@ -31,17 +31,17 @@ public class StockService {
     private final StockSender stockSender;
     private static final List<String> AVAILABLE_PRODUCTS = Arrays.asList("product1", "product2", "product3", "product4", "product5");
 
-//    @PostConstruct
-//    public void init() {
-//        stockRepository.deleteAll();
-//        AVAILABLE_PRODUCTS.forEach(product -> {
-//            int totalQuantity = new Random().nextInt(20);
-//            stockRepository.save(Stock.builder()
-//                    .name(product)
-//                    .quantity(totalQuantity)
-//                    .build());
-//        });
-//    }
+    @PostConstruct
+    public void init() {
+        stockRepository.deleteAll();
+        AVAILABLE_PRODUCTS.forEach(product -> {
+            int totalQuantity = new Random().nextInt(20);
+            stockRepository.save(Stock.builder()
+                    .name(product)
+                    .quantity(totalQuantity)
+                    .build());
+        });
+    }
 
 
     @Transactional
