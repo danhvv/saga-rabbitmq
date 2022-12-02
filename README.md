@@ -43,15 +43,18 @@ STOCK_REQUESTED, STOCK_COMPLETED, STOCK_FAILED, STOCK_PENDING
 
 Each service listens the related queue.
 
-Exchange -> sagaExchange
+### Work-flow : 
+1.  Successful Order Case
 
-Order service -> orderQueue -> orderDto is payload
-Payment service -> paymentQueue -> paymentDto is payload
-Stock service -> stockQueue -> stockDto is payload
+![image](https://drive.google.com/file/d/1IY8bLgpDt0cMr1hAaAQJml8dPTrirmqS/view?usp=sharing)
 
+2.  Failed Check Stock Case
 
-![image](https://user-images.githubusercontent.com/5938655/133602197-bf7704e6-357b-49a3-8616-38d1d37e365a.png)
+![image](https://drive.google.com/file/d/1eBjKbD5b5VBDc_HBxCRYotxXLj-7nDw7/view?usp=sharing)
 
+3.  Failed Payment Case
+
+![image](https://drive.google.com/file/d/1bPGH2k4xo9zIMzsT_QW4eJsoyhscF6nL/view?usp=sharing)
 
 
 
