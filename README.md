@@ -46,15 +46,13 @@ Each service listens the related queue.
 ### Work-flow : 
 1.  Successful Order Case
 
-![image](https://drive.google.com/uc?export=view&id=1IY8bLgpDt0cMr1hAaAQJml8dPTrirmqS)
+![demo_success_workflow drawio](https://user-images.githubusercontent.com/50053828/205211082-635a1428-04a9-4cfa-bf01-5ae2c832d918.png)
 
 2.  Failed Check Stock Case
 
-![image](https://drive.google.com/uc?export=view&id=1eBjKbD5b5VBDc_HBxCRYotxXLj-7nDw7)
+![demo_stock_failed_workflow drawio](https://user-images.githubusercontent.com/50053828/205211134-42028ef3-f165-4e32-87eb-eb4fe78bae2e.png)
 
 3.  Failed Payment Case
-
-![image](https://drive.google.com/uc?export=view&id=1bPGH2k4xo9zIMzsT_QW4eJsoyhscF6nL)
-
+![demo_payment_failed_workflow drawio](https://user-images.githubusercontent.com/50053828/205211152-b55c8e32-4471-4016-95b1-4777fc5440ca.png)
 
 
