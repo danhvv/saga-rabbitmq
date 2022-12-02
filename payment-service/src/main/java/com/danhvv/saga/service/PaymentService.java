@@ -33,6 +33,12 @@ public class PaymentService {
         }.getType());
     }
 
+    public Payment findByTransactionId(String transactionId) {
+        return paymentRepository.findByTransactionId(transactionId)
+                .orElseThrow(() -> new IllegalArgumentException(
+                        String.format("Payment can not be found by transactionId : %s", transactionId)));
+    }
+
     @Transactional
     public Payment createPayment(PaymentDto paymentDto) {
         Payment payment = Payment.builder()

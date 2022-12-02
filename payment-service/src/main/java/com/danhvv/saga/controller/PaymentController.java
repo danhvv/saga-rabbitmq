@@ -1,6 +1,8 @@
 package com.danhvv.saga.controller;
 
+import com.danhvv.saga.dto.OrderResponse;
 import com.danhvv.saga.dto.PaymentResponse;
+import com.danhvv.saga.entity.Payment;
 import com.danhvv.saga.service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -27,5 +29,16 @@ public class PaymentController {
     public ResponseEntity<PaymentResponse> getPayment(@PathVariable String paymentId) {
         return ResponseEntity.ok(paymentService.findById(paymentId));
     }
+
+    @GetMapping("/transaction/{transactionId}")
+    public ResponseEntity<PaymentResponse> getPaymentDetail(@PathVariable String transactionId){
+        Payment payment = paymentService.findByTransactionId(transactionId);
+        return ResponseEntity.ok(PaymentResponse.builder()
+                .transactionId(payment.getTransactionId())
+                .status(payment.getStatus().name())
+                .totalPrice(payment.getTotalPrice())
+                .build());
+    }
+
 }
 
