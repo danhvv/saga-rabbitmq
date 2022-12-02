@@ -46,15 +46,15 @@ Each service listens the related queue.
 ### Work-flow : 
 1.  Successful Order Case
 
-![image](https://drive.google.com/file/d/1IY8bLgpDt0cMr1hAaAQJml8dPTrirmqS/view?usp=sharing)
+![image](https://drive.google.com/uc?export=view&id=1IY8bLgpDt0cMr1hAaAQJml8dPTrirmqS)
 
 2.  Failed Check Stock Case
 
-![image](https://drive.google.com/file/d/1eBjKbD5b5VBDc_HBxCRYotxXLj-7nDw7/view?usp=sharing)
+![image](https://drive.google.com/uc?export=view&id=1eBjKbD5b5VBDc_HBxCRYotxXLj-7nDw7)
 
 3.  Failed Payment Case
 
-![image](https://drive.google.com/file/d/1bPGH2k4xo9zIMzsT_QW4eJsoyhscF6nL/view?usp=sharing)
+![image](https://drive.google.com/uc?export=view&id=1bPGH2k4xo9zIMzsT_QW4eJsoyhscF6nL)
 
 
 
