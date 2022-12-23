@@ -3,7 +3,7 @@
 - RabbitMQ
 - H2 Database
 - Saga Pattern (Choreography)
-- - Distributed Tracing (Jaeger)
+- Distributed Tracing (Jaeger)
 
 ## Docker-compose.yaml
 Run RabbitMQ with Docker
