@@ -3,6 +3,7 @@
 - RabbitMQ
 - H2 Database
 - Saga Pattern (Choreography)
+- - Distributed Tracing (Jaeger)
 
 ## Docker-compose.yaml
 Run RabbitMQ with Docker
@@ -55,4 +56,6 @@ Each service listens the related queue.
 3.  Failed Payment Case
 ![demo_payment_failed_workflow drawio](https://user-images.githubusercontent.com/50053828/205211152-b55c8e32-4471-4016-95b1-4777fc5440ca.png)
 
+### Jaeger
+http://localhost:16686/
 
